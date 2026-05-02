@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Gelistra</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Admin-specific styles ───────────────────────────────────────────────── */
+
+    /* Login */
+    .admin-login {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 2.8rem 2.4rem;
+      width: min(400px, 92vw);
+      box-shadow: var(--shadow-soft);
+    }
+    .login-brand  { font-size: 1.5rem; font-weight: 800; color: var(--ink); display: block; margin-bottom: 0.25rem; }
+    .login-brand span { color: var(--accent); }
+    .login-sub    { font-size: 0.88rem; color: var(--muted); margin-bottom: 2rem; display: block; }
+    .login-card .form-field { margin-bottom: 1rem; }
+    .login-card label { font-size: 0.83rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 0.35rem; }
+    .login-card input {
+      width: 100%; padding: 0.72rem 1rem;
+      border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+      background: var(--bg); font-size: 0.95rem; color: var(--ink);
+      outline: none; transition: border 0.18s; font-family: inherit;
+    }
+    .login-card input:focus { border-color: var(--accent); }
+    .login-error { font-size: 0.85rem; color: #d93025; margin-top: 0.6rem; min-height: 1.2em; }
+
+    /* Admin shell */
+    .admin-shell { display: none; min-height: 100vh; flex-direction: column; }
+    .admin-shell.active { display: flex; }
+
+    /* Top bar */
+    .admin-topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 0 1.8rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      gap: 1rem;
+    }
+    .topbar-brand { font-weight: 800; font-size: 1.08rem; color: var(--ink); flex-shrink: 0; }
+    .topbar-brand span { color: var(--accent); }
+    .topbar-right { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+    .admin-user   { font-size: 0.78rem; color: var(--muted); }
+    .admin-badge  { font-size: 0.72rem; background: var(--accent-soft); color: var(--accent); padding: 0.22rem 0.65rem; border-radius: 99px; font-weight: 700; }
+    .topbar-btn   { font-size: 0.82rem; color: var(--muted); cursor: pointer; border: none; background: none; font-family: inherit; padding: 0; }
+    .topbar-btn:hover { color: var(--accent); }
+    .topbar-btn.icon-btn {
+      border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+      padding: 0.3rem 0.7rem; background: var(--surface); font-size: 0.8rem;
+    }
+    .topbar-btn.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Page content */
+    .admin-page { flex: 1; padding: 1.8rem 2rem; max-width: 1360px; margin: 0 auto; width: 100%; }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.6rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .stat-card .stat-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+    .stat-card .stat-value { font-size: 1.75rem; font-weight: 800; color: var(--ink); line-height: 1.1; }
+    .stat-card .stat-sub   { font-size: 0.75rem; color: var(--muted); }
+    .stat-card.c-accent  .stat-value { color: var(--accent); }
+    .stat-card.c-accent2 .stat-value { color: var(--accent-2); }
+    .stat-card.c-yellow  .stat-value { color: #a06900; }
+    .stat-card.c-purple  .stat-value { color: #5b3fd4; }
+    .stat-card.c-green   .stat-value { color: #2e7d32; }
+
+    /* Filter row */
+    .filters-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+    }
+    .filter-chip {
+      padding: 0.38rem 0.95rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.14s;
+    }
+    .filter-chip:hover  { border-color: var(--accent); color: var(--accent); }
+    .filter-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .search-box {
+      margin-left: auto;
+      padding: 0.42rem 1rem;
+      border: 1.5px solid var(--line);
+      border-radius: 99px;
+      font-size: 0.84rem;
+      background: var(--surface);
+      color: var(--ink);
+      width: 230px;
+      outline: none;
+      font-family: inherit;
+    }
+    .search-box:focus { border-color: var(--accent); }
+
+    /* Table */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      overflow-x: auto;
+    }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 700px; }
+    .admin-table thead { background: var(--surface-strong); }
+    .admin-table th {
+      text-align: left;
+      padding: 0.7rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .admin-table td {
+      padding: 0.82rem 1rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      vertical-align: middle;
+    }
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tbody tr[data-id] { cursor: pointer; transition: background 0.11s; }
+    .admin-table tbody tr[data-id]:hover { background: var(--bg); }
+
+    .type-badge {
+      display: inline-flex;
+      padding: 0.18rem 0.55rem;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .type-badge.inquiry      { background: #fff0eb; color: var(--accent); }
+    .type-badge.requirements { background: #e8f8f7; color: var(--accent-2); }
+
+    .status-select {
+      padding: 0.26rem 0.55rem;
+      border-radius: 7px;
+      font-size: 0.77rem;
+      font-weight: 600;
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+      font-family: inherit;
+      outline: none;
+    }
+    .status-select.new        { border-color: #d4a012; color: #8a6200; background: #fffbea; }
+    .status-select.in-review  { border-color: #7b61ff; color: #5b3fd4; background: #f3f0ff; }
+    .status-select.proposal   { border-color: var(--accent-2); color: var(--accent-2); background: #e8f8f7; }
+    .status-select.closed     { border-color: #4caf50; color: #2e7d32; background: #f1fbf2; }
+
+    .empty-state { padding: 3.5rem 1rem; text-align: center; color: var(--muted); }
+    .empty-state svg { width: 44px; height: 44px; opacity: 0.22; margin: 0 auto 0.7rem; display: block; }
+
+    .loading-state { padding: 2.5rem; text-align: center; color: var(--muted); font-size: 0.9rem; }
+
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid var(--line);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Detail drawer */
+    .drawer-overlay {
+      position: fixed; inset: 0;
+      background: rgba(31,39,55,0.44);
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .detail-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(980px, 74vw);
+      background: var(--surface);
+      border-left: 1px solid var(--line);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.24s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .detail-drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      padding: 1.3rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 1rem;
+      flex-shrink: 0;
+    }
+    .drawer-title { font-size: 1rem; font-weight: 800; color: var(--ink); }
+    .drawer-sub   { font-size: 0.8rem; color: var(--muted); margin-top: 0.18rem; }
+    .drawer-close {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.2rem; color: var(--muted); line-height: 1;
+      flex-shrink: 0; padding: 0.1rem; font-family: inherit;
+    }
+    .drawer-close:hover { color: var(--accent); }
+
+    .drawer-body { flex: 1; overflow-y: auto; padding: 1.3rem 1.5rem; }
+
+    .drawer-workspace {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .drawer-pane {
+      min-width: 0;
+    }
+    .drawer-pane.right {
+      position: sticky;
+      top: 0;
+    }
+
+    .drawer-section { margin-bottom: 1.4rem; }
+    .drawer-section-title {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+      padding-bottom: 0.38rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .detail-field label { font-size: 0.72rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 0.18rem; }
+    .detail-field span  { font-size: 0.88rem; color: var(--ink); word-break: break-word; line-height: 1.45; white-space: pre-wrap; }
+    .detail-field.full  { grid-column: 1 / -1; }
+
+    .drawer-micro-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); margin: 0.6rem 0 0.35rem; }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.38rem; }
+    .tag { background: var(--accent-soft); color: var(--accent); font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 5px; }
+    .tag.teal { background: #e8f8f7; color: var(--accent-2); }
+
+    .drawer-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--line);
+      display: flex; gap: 0.65rem;
+      flex-shrink: 0; flex-wrap: wrap;
+    }
+
+    .quote-lab {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fffdfa, #ffffff);
+      padding: 0.95rem;
+    }
+    .quote-lab h4 {
+      margin: 0 0 0.2rem;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .quote-lab p {
+      margin: 0 0 0.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .quote-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-bottom: 0.75rem;
+    }
+    .quote-field {
+      display: grid;
+      gap: 0.22rem;
+    }
+    .quote-field.full {
+      grid-column: 1 / -1;
+    }
+    .quote-field label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .quote-field input,
+    .quote-field select,
+    .quote-field textarea {
+      width: 100%;
+      padding: 0.5rem 0.58rem;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 0.82rem;
+      color: var(--ink);
+      font-family: inherit;
+      outline: none;
+    }
+    .quote-field input:focus,
+    .quote-field select:focus,
+    .quote-field textarea:focus {
+      border-color: var(--accent);
+    }
+    .quote-lines {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 10px;
+      padding: 0.65rem 0.72rem;
+      margin-bottom: 0.75rem;
+    }
+    .quote-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--ink);
+      margin-bottom: 0.36rem;
+    }
+    .quote-line:last-child { margin-bottom: 0; }
+    .quote-line span:last-child {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+    }
+    .quote-line.total {
+      margin-top: 0.45rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .quote-total-box {
+      background: linear-gradient(140deg, #1f2737, #2c3a52);
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+    .quote-total-box small {
+      display: block;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.24rem;
+    }
+    .quote-total-box strong {
+      display: block;
+      color: #fff;
+      font-size: 1.35rem;
+      font-family: 'Sora', sans-serif;
+      line-height: 1.2;
+    }
+    .quote-total-box em {
+      display: block;
+      margin-top: 0.2rem;
+      color: rgba(255,255,255,0.56);
+      font-size: 0.72rem;
+      font-style: normal;
+    }
+    .quote-actions {
+      display: grid;
+      gap: 0.45rem;
+    }
+    .quote-actions .btn-primary,
+    .quote-actions .btn-ghost {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    /* ── Tab navigation ───────────────────────────────────────────────────── */
+    .topbar-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--bg);
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .topbar-tab {
+      padding: 0.36rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .topbar-tab:hover { color: var(--ink); }
+    .topbar-tab.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .admin-view { display: none; }
+    .admin-view.active { display: block; }
+
+    /* ── Cost Calculator ──────────────────────────────────────────────────── */
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 1.2rem;
+      align-items: start;
+    }
+    .calc-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 1.4rem;
+    }
+    .calc-panel-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .calc-field {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .calc-field label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .calc-field label small {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+    .calc-input {
+      width: 130px;
+      padding: 0.45rem 0.7rem;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: right;
+      font-family: 'Sora', sans-serif;
+      outline: none;
+    }
+    .calc-input:focus { border-color: var(--accent); }
+    .calc-input.narrow { width: 90px; }
+    .calc-select {
+      width: 170px;
+      padding: 0.45rem 0.7rem;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--ink);
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+    .calc-select:focus { border-color: var(--accent); }
+    .calc-section { margin-bottom: 1.2rem; }
+    .calc-section-head {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .calc-section-head::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .calc-check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .calc-check {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.65rem;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .calc-check:hover { border-color: #c9bca6; }
+    .calc-check.checked {
+      border-color: var(--accent-2);
+      background: #edf9f8;
+    }
+    .calc-check input { display: none; }
+    .calc-check-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 2px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .calc-check.checked .calc-check-icon {
+      background: var(--accent-2);
+      border-color: var(--accent-2);
+      color: #fff;
+    }
+    .calc-check-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+      flex: 1;
+    }
+    .calc-check-price {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .calc-check.checked .calc-check-price { color: var(--accent-2); }
+    .calc-inline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+    .calc-inline .calc-input { width: 80px; }
+
+    /* Client info */
+    .calc-client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .calc-client-field {
+      display: grid;
+      gap: 0.2rem;
+    }
+    .calc-client-field label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .calc-client-field input {
+      padding: 0.48rem 0.7rem;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 0.86rem;
+      color: var(--ink);
+      font-family: inherit;
+      outline: none;
+    }
+    .calc-client-field input:focus { border-color: var(--accent); }
+    .calc-client-field.full { grid-column: 1 / -1; }
+
+    /* Summary sidebar */
+    .calc-summary {
+      position: sticky;
+      top: 70px;
+    }
+    .calc-total-box {
+      background: linear-gradient(140deg, #1f2737, #2c3a52);
+      border-radius: 14px;
+      padding: 1.3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .calc-total-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.3rem;
+    }
+    .calc-total-amount {
+      font-size: 2rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .calc-total-sub {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.25rem;
+    }
+    .calc-line-items { margin-bottom: 1rem; }
+    .calc-line-items h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .calc-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0;
+      font-size: 0.84rem;
+      color: var(--ink);
+    }
+    .calc-line span:last-child {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    .calc-line.sub-line {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .calc-line-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 0.5rem 0;
+    }
+    .calc-line.total-line {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .calc-line.total-line span:last-child {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .calc-actions {
+      display: grid;
+      gap: 0.5rem;
+    }
+    .calc-actions .btn-primary,
+    .calc-actions .btn-ghost {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+    .calc-note {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.8rem;
+      line-height: 1.4;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .calc-layout { grid-template-columns: 1fr; }
+      .calc-summary { position: relative; top: 0; order: -1; }
+      .detail-drawer { width: min(960px, 92vw); }
+      .drawer-workspace { grid-template-columns: 1fr; }
+      .drawer-pane.right { position: relative; }
+    }
+    @media (max-width: 860px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .admin-page { padding: 1rem; }
+    }
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .detail-drawer { width: 100vw; }
+      .admin-table th:nth-child(4),
+      .admin-table td:nth-child(4) { display: none; }
+      .search-box { width: 100%; margin-left: 0; }
+      .calc-check-grid { grid-template-columns: 1fr; }
+      .calc-client-grid { grid-template-columns: 1fr; }
+      .quote-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-grain" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════════════════════════════════════════════════ -->
+<div class="admin-login" id="login-screen">
+  <div class="login-card">
+    <span class="login-brand">Geli<span>stra</span></span>
+    <span class="login-sub">Admin Portal — Sign in to continue</span>
+
+    <div class="form-field">
+      <label for="admin-email">Email address</label>
+      <input type="email" id="admin-email" placeholder="admin@gelistra.com" autocomplete="email">
+    </div>
+    <div class="form-field">
+      <label for="admin-password">Password</label>
+      <input type="password" id="admin-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <p class="login-error" id="login-error" role="alert"></p>
+    <button class="btn-primary" id="login-btn" style="width:100%;margin-top:0.4rem;">Sign In</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     ADMIN SHELL
+════════════════════════════════════════════════════════════════════════════ -->
+<div class="admin-shell" id="admin-shell">
+
+  <!-- Top bar -->
+  <header class="admin-topbar">
+    <div class="topbar-brand">Geli<span>stra</span> Admin</div>
+    <div class="topbar-tabs">
+      <button class="topbar-tab active" data-admin-tab="submissions">📋 Submissions</button>
+      <button class="topbar-tab" data-admin-tab="calculator">💰 Cost Calculator</button>
+    </div>
+    <div class="topbar-right">
+      <span class="admin-user" id="admin-email-display"></span>
+      <span class="admin-badge">Admin</span>
+      <button class="topbar-btn icon-btn" id="refresh-btn" title="Refresh submissions">↻ Refresh</button>
+      <button class="topbar-btn icon-btn" id="export-csv-btn" title="Export current view to CSV">⬇ Export CSV</button>
+      <button class="topbar-btn" id="logout-btn">Sign out</button>
+    </div>
+  </header>
+
+  <main class="admin-page">
+
+    <!-- ═══ VIEW: Submissions ═══ -->
+    <div class="admin-view active" id="view-submissions">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card c-accent">
+          <span class="stat-label">Total Leads</span>
+          <span class="stat-value" id="stat-total">—</span>
+          <span class="stat-sub">All time</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Inquiries</span>
+          <span class="stat-value" id="stat-inquiries">—</span>
+          <span class="stat-sub">Contact form</span>
+        </div>
+        <div class="stat-card c-accent2">
+          <span class="stat-label">Requirements</span>
+          <span class="stat-value" id="stat-requirements">—</span>
+          <span class="stat-sub">Full form</span>
+        </div>
+        <div class="stat-card c-yellow">
+          <span class="stat-label">New</span>
+          <span class="stat-value" id="stat-new">—</span>
+          <span class="stat-sub">Awaiting review</span>
+        </div>
+        <div class="stat-card c-purple">
+          <span class="stat-label">In Review</span>
+          <span class="stat-value" id="stat-review">—</span>
+          <span class="stat-sub">Being evaluated</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Proposals Sent</span>
+          <span class="stat-value" id="stat-proposal">—</span>
+          <span class="stat-sub">Awaiting client</span>
+        </div>
+        <div class="stat-card c-green">
+          <span class="stat-label">Closed</span>
+          <span class="stat-value" id="stat-closed">—</span>
+          <span class="stat-sub">Won or lost</span>
+        </div>
+      </div>
+
+      <!-- Filters + search -->
+      <div class="filters-row">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="type:inquiry">Inquiries</button>
+        <button class="filter-chip" data-filter="type:requirements">Requirements</button>
+        <button class="filter-chip" data-filter="status:new">New</button>
+        <button class="filter-chip" data-filter="status:in-review">In Review</button>
+        <button class="filter-chip" data-filter="status:proposal">Proposal Sent</button>
+        <button class="filter-chip" data-filter="status:closed">Closed</button>
+        <input class="search-box" id="search-box" type="search" placeholder="Search name, email, company…" aria-label="Search submissions">
+      </div>
+
+      <!-- Submissions table -->
+      <div class="table-wrap" role="region" aria-label="Submissions table">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Name / Email</th>
+              <th>Company</th>
+              <th>Type</th>
+              <th>Package / Service</th>
+              <th>Budget</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="submissions-tbody">
+            <tr>
+              <td colspan="7" class="loading-state">
+                <span class="spinner"></span> Loading submissions…
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ═══ VIEW: Cost Calculator ═══ -->
+    <div class="admin-view" id="view-calculator">
+      <div class="calc-layout">
+
+        <!-- Left: Configuration -->
+        <div>
+          <!-- Client info -->
+          <div class="calc-panel" style="margin-bottom:1.2rem">
+            <div class="calc-panel-title">Client Information</div>
+            <div class="calc-client-grid">
+              <div class="calc-client-field">
+                <label>Client Name</label>
+                <input type="text" id="calc-client-name" placeholder="e.g. Riya Sharma">
+              </div>
+              <div class="calc-client-field">
+                <label>Company / Brand</label>
+                <input type="text" id="calc-client-company" placeholder="e.g. AtlasTech">
+              </div>
+              <div class="calc-client-field">
+                <label>Email</label>
+                <input type="email" id="calc-client-email" placeholder="e.g. riya@atlastech.co">
+              </div>
+              <div class="calc-client-field">
+                <label>Phone</label>
+                <input type="tel" id="calc-client-phone" placeholder="e.g. +91 98765 43210">
+              </div>
+              <div class="calc-client-field full">
+                <label>Project Notes</label>
+                <input type="text" id="calc-client-notes" placeholder="Internal notes about this quote…">
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing config -->
+          <div class="calc-panel">
+            <div class="calc-panel-title">Project Pricing Configuration</div>
+
+            <!-- Base pricing -->
+            <div class="calc-section">
+              <div class="calc-section-head">Base Project</div>
+              <div class="calc-field">
+                <label>Website Type</label>
+                <select class="calc-select" id="calc-type">
+                  <option value="1400">Landing Page — ₹1,400</option>
+                  <option value="2100">Static / Portfolio — ₹2,100</option>
+                  <option value="2800">Blog / Magazine — ₹2,800</option>
+                  <option value="3500" selected>Business Website — ₹3,500</option>
+                  <option value="8400">E-Commerce Store — ₹8,400</option>
+                  <option value="12600">Web Application — ₹12,600</option>
+                  <option value="custom">Custom Base Price</option>
+                </select>
+              </div>
+              <div class="calc-field" id="calc-custom-base-wrap" style="display:none">
+                <label>Custom Base Price <small>(₹)</small></label>
+                <input type="number" class="calc-input" id="calc-custom-base" value="3500" min="0" step="100">
+              </div>
+              <div class="calc-field">
+                <label>Number of Pages</label>
+                <input type="number" class="calc-input narrow" id="calc-pages" value="5" min="1" max="100">
+              </div>
+              <div class="calc-field">
+                <label>Per-Page Rate <small>(₹)</small></label>
+                <input type="number" class="calc-input narrow" id="calc-page-rate" value="350" min="0" step="50">
+              </div>
+            </div>
+
+            <!-- Design -->
+            <div class="calc-section">
+              <div class="calc-section-head">Design & Complexity</div>
+              <div class="calc-field">
+                <label>Design Tier</label>
+                <select class="calc-select" id="calc-design">
+                  <option value="1">Standard (1×)</option>
+                  <option value="1.5">Premium (1.5×)</option>
+                  <option value="2">Luxury (2×)</option>
+                  <option value="2.5">Bespoke (2.5×)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Features -->
+            <div class="calc-section">
+              <div class="calc-section-head">Features & Add-ons</div>
+              <div class="calc-check-grid" id="calc-features">
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="3500" checked>
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>CMS Integration</span>
+                    <span class="calc-check-price">₹3,500</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="2100" checked>
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Advanced SEO Setup</span>
+                    <span class="calc-check-price">₹2,100</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="1400">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Analytics & Tracking</span>
+                    <span class="calc-check-price">₹1,400</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="2800">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Copywriting Support</span>
+                    <span class="calc-check-price">₹2,800</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="4200">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Payment Gateway</span>
+                    <span class="calc-check-price">₹4,200</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="2800">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>User Auth & Dashboard</span>
+                    <span class="calc-check-price">₹2,800</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="1750">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Advanced Forms & Leads</span>
+                    <span class="calc-check-price">₹1,750</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="3500">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Multi-language Support</span>
+                    <span class="calc-check-price">₹3,500</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="2100">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>Live Chat Integration</span>
+                    <span class="calc-check-price">₹2,100</span>
+                  </span>
+                </label>
+                <label class="calc-check">
+                  <input type="checkbox" data-cost="4900">
+                  <span class="calc-check-icon">✓</span>
+                  <span class="calc-check-info">
+                    <span>3rd-Party API Integration</span>
+                    <span class="calc-check-price">₹4,900</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Custom line item -->
+            <div class="calc-section">
+              <div class="calc-section-head">Custom Line Item</div>
+              <div class="calc-field">
+                <label>Description</label>
+                <input type="text" class="calc-input" id="calc-custom-desc" placeholder="e.g. Logo Design" style="width:170px;text-align:left">
+              </div>
+              <div class="calc-field">
+                <label>Amount <small>(₹)</small></label>
+                <input type="number" class="calc-input narrow" id="calc-custom-cost" value="0" min="0" step="100">
+              </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="calc-section">
+              <div class="calc-section-head">Timeline & Support</div>
+              <div class="calc-field">
+                <label>Timeline Rush</label>
+                <select class="calc-select" id="calc-rush">
+                  <option value="1">Standard (4-6 weeks) — No rush fee</option>
+                  <option value="1.2">Fast Track (2-3 weeks) — +20%</option>
+                  <option value="1.5">Urgent (under 2 weeks) — +50%</option>
+                  <option value="1.75">Emergency (&lt;1 week) — +75%</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label>Post-Launch Support</label>
+                <select class="calc-select" id="calc-support">
+                  <option value="0">None — ₹0</option>
+                  <option value="2100">3 months — ₹2,100</option>
+                  <option value="4200">6 months — ₹4,200</option>
+                  <option value="7000">12 months — ₹7,000</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Discount / Tax -->
+            <div class="calc-section">
+              <div class="calc-section-head">Adjustments</div>
+              <div class="calc-field">
+                <label>Discount <small>(%)</small></label>
+                <input type="number" class="calc-input narrow" id="calc-discount" value="0" min="0" max="100" step="1">
+              </div>
+              <div class="calc-field">
+                <label>Tax / GST <small>(%)</small></label>
+                <input type="number" class="calc-input narrow" id="calc-tax" value="0" min="0" max="100" step="1">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Summary -->
+        <div class="calc-summary">
+          <div class="calc-panel">
+            <div class="calc-panel-title">Quote Summary</div>
+
+            <div class="calc-total-box">
+              <div class="calc-total-label">Grand Total</div>
+              <div class="calc-total-amount" id="calc-grand-total">₹0</div>
+              <div class="calc-total-sub" id="calc-total-sub">Before tax</div>
+            </div>
+
+            <div class="calc-line-items">
+              <h4>Line Items</h4>
+              <div id="calc-line-items-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div class="calc-actions">
+              <button class="btn-primary" id="calc-pdf-btn">📄 Generate Quote PDF</button>
+              <button class="btn-ghost" id="calc-reset-btn">↻ Reset Calculator</button>
+            </div>
+            <p class="calc-note">This quote is for internal use. Share the generated PDF with the client for a professional proposal.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     DETAIL DRAWER
+════════════════════════════════════════════════════════════════════════════ -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<aside class="detail-drawer" id="detail-drawer" role="dialog" aria-modal="true" aria-label="Submission details">
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-title" id="drawer-title">—</div>
+      <div class="drawer-sub"   id="drawer-sub">—</div>
+    </div>
+    <button class="drawer-close" id="drawer-close" aria-label="Close drawer">✕</button>
+  </div>
+
+  <div class="drawer-body" id="drawer-body">
+    <!-- Populated by admin.js -->
+  </div>
+
+  <div class="drawer-footer">
+    <button class="btn-primary" id="drawer-pdf-btn">⬇ Download Submission PDF</button>
+    <button class="btn-ghost"   id="drawer-close-btn">Close</button>
+  </div>
+</aside>
+
+<!-- jsPDF (must load before admin.js uses it) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Admin logic (ES module) -->
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>

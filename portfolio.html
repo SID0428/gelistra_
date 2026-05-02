@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Gelistra</title>
+  <meta name="description" content="Explore recent website projects by Gelistra across business, SaaS, and ecommerce brands.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Gelistra Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Gelistra
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html" data-nav>Home</a>
+        <a href="about.html" data-nav>About</a>
+        <a href="services.html" data-nav>Services</a>
+        <a href="portfolio.html" data-nav>Portfolio</a>
+        <a href="estimator.html" data-nav>Estimator</a>
+        <a href="contact.html" data-nav>Contact</a>
+        <a href="contact.html" class="btn-mini">Start Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow reveal">Selected Work</span>
+        <h1 class="reveal">Case studies from brands that needed growth-ready websites.</h1>
+        <p class="reveal">Filter by category and open any project to see the challenge, solution stack, and measurable outcomes.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="filter-row reveal">
+          <button class="filter-btn active" type="button" data-filter="all">All</button>
+          <button class="filter-btn" type="button" data-filter="business">Business</button>
+          <button class="filter-btn" type="button" data-filter="saas">SaaS</button>
+          <button class="filter-btn" type="button" data-filter="ecommerce">Ecommerce</button>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card reveal" data-category="business" data-category-label="Business Website" data-title="NovaCare Clinics" data-summary="Repositioned a clinic network with a conversion-focused website and city-level landing pages." data-stack="Next.js, Headless CMS, GA4, Calendly API" data-impact="2.4x increase in appointment bookings within 70 days.">
+            <div class="project-visual"><span>Business</span></div>
+            <div class="project-body">
+              <h3>NovaCare Clinics</h3>
+              <p>Healthcare multi-location lead generation platform.</p>
+              <div class="project-meta">Design + Development + SEO</div>
+              <button type="button" class="btn-ghost project-open">Open Project</button>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="saas" data-category-label="SaaS Marketing Site" data-title="MiraLabs AI" data-summary="Built a narrative-first product website with modular pricing pages and comparison sections." data-stack="React, Node, Sanity CMS, HubSpot" data-impact="41% increase in trial signups quarter-over-quarter.">
+            <div class="project-visual"><span>SaaS</span></div>
+            <div class="project-body">
+              <h3>MiraLabs AI</h3>
+              <p>Product-led growth website for a B2B AI startup.</p>
+              <div class="project-meta">Messaging + UI + Frontend</div>
+              <button type="button" class="btn-ghost project-open">Open Project</button>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="ecommerce" data-category-label="Ecommerce Storefront" data-title="Arbor Market" data-summary="Redesigned storefront flows, checkout touchpoints, and seasonal campaign pages for higher order value." data-stack="Shopify, Liquid, Klaviyo, Segment" data-impact="36% increase in average order value and 28% lift in returning buyers.">
+            <div class="project-visual"><span>Ecommerce</span></div>
+            <div class="project-body">
+              <h3>Arbor Market</h3>
+              <p>D2C storefront optimization with campaign-ready templates.</p>
+              <div class="project-meta">UX + CRO + Performance</div>
+              <button type="button" class="btn-ghost project-open">Open Project</button>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="business" data-category-label="Business Website" data-title="Summit Legal Group" data-summary="Created a trust-building legal website with structured service pages and consultation flows." data-stack="Static Frontend, CMS Bridge, Schema Markup" data-impact="89% increase in qualified consultation requests.">
+            <div class="project-visual"><span>Business</span></div>
+            <div class="project-body">
+              <h3>Summit Legal Group</h3>
+              <p>Professional services website with conversion-first layout.</p>
+              <div class="project-meta">Brand + UX + Lead Funnel</div>
+              <button type="button" class="btn-ghost project-open">Open Project</button>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="saas" data-category-label="SaaS Website" data-title="FlowPilot" data-summary="Launched a modular SaaS site with use-case pages and API documentation entry points." data-stack="Next.js, MDX Docs, PostHog" data-impact="53% lift in product demo requests from organic traffic.">
+            <div class="project-visual"><span>SaaS</span></div>
+            <div class="project-body">
+              <h3>FlowPilot</h3>
+              <p>Automation SaaS website optimized for signups.</p>
+              <div class="project-meta">Web Strategy + Build</div>
+              <button type="button" class="btn-ghost project-open">Open Project</button>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="ecommerce" data-category-label="Ecommerce Website" data-title="Velora Skincare" data-summary="Introduced a conversion-oriented product story flow, bundle pages, and upsell touchpoints." data-stack="Shopify Plus, Custom JS, Klaviyo" data-impact="31% increase in conversion rate and 22% reduction in cart abandonment.">
+            <div class="project-visual"><span>Ecommerce</span></div>
+            <div class="project-body">
+              <h3>Velora Skincare</h3>
+              <p>Premium beauty ecommerce website revamp.</p>
+              <div class="project-meta">Design + Dev + Lifecycle</div>
+              <button type="button" class="btn-ghost project-open">Open Project</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-banner reveal">
+          <div>
+            <h3>Want your brand to be the next case study?</h3>
+            <p>Share your current website, growth goals, and timeline. We will suggest the best strategy and feature stack.</p>
+          </div>
+          <a href="contact.html" class="btn-primary">Start My Project</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="project-modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-top">
+        <div>
+          <h3 data-modal="title">Project</h3>
+          <p class="project-meta" data-modal="category"></p>
+        </div>
+        <button type="button" class="modal-close" aria-label="Close modal">X</button>
+      </div>
+      <div class="modal-detail">
+        <p><strong>Overview:</strong> <span data-modal="summary"></span></p>
+        <p><strong>Stack:</strong> <span data-modal="stack"></span></p>
+        <p><strong>Impact:</strong> <span data-modal="impact"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-box">
+        <p>&copy; <span data-current-year></span> Gelistra. Built for growth-focused brands.</p>
+        <div class="footer-stack">
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="estimator.html">Estimator</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-links footer-legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-and-conditions.html">Terms</a>
+            <a href="refund-cancellation-policy.html">Refund Policy</a>
+            <a href="cookie-policy.html">Cookie Policy</a>
+            <a href="disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

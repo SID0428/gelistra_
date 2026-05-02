@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Sign Up | Gelistra</title>
+  <meta name="description" content="Log in to view your projects and submit requirements.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .auth-container { max-width: 450px; margin: 4rem auto; }
+    .auth-switch { text-align: center; margin-top: 1.5rem; }
+    .auth-switch button { background: none; border: none; color: var(--accent); cursor: pointer; text-decoration: underline; font-size: 1rem; padding: 0;}
+  </style>
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Gelistra Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Gelistra
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html" data-nav>Home</a>
+        <a href="about.html" data-nav>About</a>
+        <a href="services.html" data-nav>Services</a>
+        <a href="portfolio.html" data-nav>Portfolio</a>
+        <a href="estimator.html" data-nav>Estimator</a>
+        <a href="contact.html" data-nav>Contact</a>
+        <a href="contact.html" class="btn-mini" id="nav-action-btn">Start Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container auth-container">
+        <div class="form-card reveal">
+          <h2 class="section-title" id="auth-title" style="font-size: 1.7rem; margin-bottom: 0.7rem;">Sign In</h2>
+          <p class="section-copy" id="auth-subtitle" style="margin-bottom: 1.5rem;">Welcome back. Please enter your details.</p>
+
+          <form id="auth-form" novalidate>
+            <div class="form-grid" style="grid-template-columns: 1fr;">
+              <div class="form-field" id="name-field-wrap" style="display: none;">
+                <label for="auth-name">Full name *</label>
+                <input type="text" id="auth-name" name="name">
+              </div>
+              <div class="form-field">
+                <label for="auth-email">Email *</label>
+                <input type="email" id="auth-email" name="email" required>
+              </div>
+              <div class="form-field">
+                <label for="auth-password">Password *</label>
+                <input type="password" id="auth-password" name="password" required>
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 1.5rem; justify-content: center;">
+              <button type="submit" class="btn-primary" style="width: 100%;" id="auth-submit-btn">Sign In</button>
+            </div>
+            <p class="form-message" id="auth-message" aria-live="polite"></p>
+          </form>
+
+          <div class="auth-switch">
+             <span id="auth-switch-text">Don't have an account?</span> 
+             <button type="button" id="auth-switch-btn">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-box">
+        <p>&copy; <span data-current-year></span> Gelistra. Built for growth-focused brands.</p>
+        <div class="footer-stack">
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="estimator.html">Estimator</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-links footer-legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-and-conditions.html">Terms</a>
+            <a href="refund-cancellation-policy.html">Refund Policy</a>
+            <a href="cookie-policy.html">Cookie Policy</a>
+            <a href="disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

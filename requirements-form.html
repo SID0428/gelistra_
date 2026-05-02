@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Requirements Form | Gelistra</title>
+  <meta name="description" content="Complete a professional website requirements brief so we can prepare accurate scope, timeline, and proposal documents.">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    let isAuthenticated = false;
+    try {
+      const raw = localStorage.getItem('gelistra_user');
+      const user = raw ? JSON.parse(raw) : null;
+      isAuthenticated = Boolean(user && user.token);
+    } catch {
+      isAuthenticated = false;
+    }
+    if (!isAuthenticated) {
+      const currentUrl = 'requirements-form.html' + window.location.search;
+      window.location.href = 'login.html?redirect=' + encodeURIComponent(currentUrl);
+    }
+  </script>
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Gelistra Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Gelistra
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html" data-nav>Home</a>
+        <a href="about.html" data-nav>About</a>
+        <a href="services.html" data-nav>Services</a>
+        <a href="portfolio.html" data-nav>Portfolio</a>
+        <a href="estimator.html" data-nav>Estimator</a>
+        <a href="contact.html" data-nav>Contact</a>
+        <a href="contact.html" class="btn-mini">Start Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow reveal">Client Intake</span>
+        <h1 class="reveal">Website Project Requirements Form</h1>
+        <p class="reveal">Complete this brief so we can prepare a clear project scope, delivery timeline, and commercial proposal based on your exact requirements.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="requirement-shell">
+          <div class="requirement-top">
+            <div>
+              <h2 class="section-title" style="font-size: 1.7rem; margin-bottom: 0.4rem;">Client Requirements Brief</h2>
+              <p class="section-copy">Estimated completion: 18-22 minutes. Fields marked with * are mandatory for proposal preparation. NDA can be shared on request before discovery.</p>
+            </div>
+            <span class="package-pill" id="selected-package-pill">Package: Growth</span>
+          </div>
+
+          <form id="requirements-form" novalidate>
+
+            <!-- ① PRIMARY CONTACT -->
+            <div class="section-divider" style="border-top: 0; padding-top: 0; margin-top: 0;">
+              <h3>1. Primary contact & approval workflow</h3>
+              <p>Identify the core stakeholders for communication, approval, and sign-off.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-name">Primary contact name *</label>
+                  <input type="text" id="req-name" name="name" placeholder="e.g. Priya Sharma" required>
+                </div>
+                <div class="form-field">
+                  <label for="req-email">Business email *</label>
+                  <input type="email" id="req-email" name="email" placeholder="name@company.com" required>
+                </div>
+                <div class="form-field">
+                  <label for="req-phone">Phone / WhatsApp *</label>
+                  <input type="tel" id="req-phone" name="phone" placeholder="+91 98765 43210" required>
+                </div>
+                <div class="form-field">
+                  <label for="req-company">Company / organization *</label>
+                  <input type="text" id="req-company" name="company" required>
+                </div>
+                <div class="form-field">
+                  <label for="req-role">Job title / department</label>
+                  <input type="text" id="req-role" name="role" placeholder="e.g. Founder, Marketing Lead, Product Manager">
+                </div>
+                <div class="form-field">
+                  <label for="req-decision-maker">Final approver for scope and budget *</label>
+                  <input type="text" id="req-decision-maker" name="decision_maker" placeholder="e.g. Founder, CEO, Procurement Lead" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- ② BUSINESS CONTEXT -->
+            <div class="section-divider">
+              <h3>2. Business context & objectives</h3>
+              <p>This helps us align messaging, user journeys, and conversion priorities.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-industry">Industry vertical *</label>
+                  <select id="req-industry" name="industry" required data-other-input="req-industry-other">
+                    <option value="">Select industry</option>
+                    <option>Professional Services (Law, Finance, Consulting)</option>
+                    <option>Healthcare / Clinic / Wellness</option>
+                    <option>SaaS / Technology</option>
+                    <option>E-commerce / Retail</option>
+                    <option>Education / Training</option>
+                    <option>Real Estate / Construction</option>
+                    <option>Agency / Creative Studio</option>
+                    <option>Food & Hospitality</option>
+                    <option>Manufacturing / Industrial</option>
+                    <option>Non-Profit / NGO</option>
+                    <option>Logistics / Supply Chain</option>
+                    <option>Travel / Tourism</option>
+                    <option>Automotive / Mobility</option>
+                    <option>FinTech / InsurTech</option>
+                    <option>Media / Entertainment</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-current-site">Current website URL (if any)</label>
+                  <input type="url" id="req-current-site" name="current_site" placeholder="https://example.com">
+                </div>
+                <div class="form-field full">
+                  <label for="req-audience">Primary target audience and intent *</label>
+                  <textarea id="req-audience" name="audience" rows="3" required placeholder="Describe your primary audience, buying context, and pain points. Example: Mid-market operations teams evaluating workflow automation tools for 2026 implementation."></textarea>
+                </div>
+                <div class="form-field full" id="req-industry-other-wrap" hidden>
+                  <label for="req-industry-other">Other industry details *</label>
+                  <input type="text" id="req-industry-other" name="industry_other" placeholder="Specify your industry in detail">
+                </div>
+              </div>
+
+              <p style="margin-top: 0.8rem; margin-bottom: 0.5rem;" class="helper-text">Project objectives (select all that apply) *</p>
+              <div class="choice-grid">
+                <label class="choice-item"><input type="checkbox" name="goal" value="leads"> Generate qualified leads</label>
+                <label class="choice-item"><input type="checkbox" name="goal" value="sales"> Drive online sales / transactions</label>
+                <label class="choice-item"><input type="checkbox" name="goal" value="bookings"> Enable consultation or appointment booking</label>
+                <label class="choice-item"><input type="checkbox" name="goal" value="branding"> Strengthen brand credibility</label>
+                <label class="choice-item"><input type="checkbox" name="goal" value="portfolio"> Showcase portfolio / case studies</label>
+                <label class="choice-item"><input type="checkbox" name="goal" value="other"> Other objective (mention in notes)</label>
+              </div>
+
+              <div class="form-grid" style="margin-top: 0.85rem;">
+                <div class="form-field">
+                  <label for="req-business-model">Business model</label>
+                  <select id="req-business-model" name="business_model" data-other-input="req-business-model-other">
+                    <option value="">Select one</option>
+                    <option>B2B Services</option>
+                    <option>B2C Brand</option>
+                    <option>D2C / E-commerce</option>
+                    <option>SaaS / Subscription</option>
+                    <option>Marketplace Platform</option>
+                    <option>Franchise / Multi-location</option>
+                    <option>Hybrid Product + Service</option>
+                    <option>Non-profit / Public Sector</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-secondary-audience">Secondary audience segments</label>
+                  <input type="text" id="req-secondary-audience" name="secondary_audience" placeholder="e.g. Partners, resellers, investors">
+                </div>
+                <div class="form-field full" id="req-business-model-other-wrap" hidden>
+                  <label for="req-business-model-other">Other business model details *</label>
+                  <input type="text" id="req-business-model-other" name="business_model_other" placeholder="Specify your business model">
+                </div>
+                <div class="form-field full">
+                  <label>Target vertical focus (multi-select)</label>
+                  <div class="choice-grid">
+                    <label class="choice-item"><input type="checkbox" name="target_vertical" value="India"> India</label>
+                    <label class="choice-item"><input type="checkbox" name="target_vertical" value="Middle East"> Middle East</label>
+                    <label class="choice-item"><input type="checkbox" name="target_vertical" value="North America"> North America</label>
+                    <label class="choice-item"><input type="checkbox" name="target_vertical" value="Europe"> Europe</label>
+                    <label class="choice-item"><input type="checkbox" name="target_vertical" value="APAC"> APAC</label>
+                    <label class="choice-item"><input type="checkbox" id="req-target-vertical-other-toggle" name="target_vertical" value="other"> Other region focus</label>
+                  </div>
+                </div>
+                <div class="form-field full" id="req-target-verticals-other-wrap" hidden>
+                  <label for="req-target-verticals-other">Other target region details *</label>
+                  <input type="text" id="req-target-verticals-other" name="target_verticals_other" placeholder="Specify additional region/market focus">
+                </div>
+                <div class="form-field full">
+                  <label for="req-usp">Unique value proposition (USP)</label>
+                  <textarea id="req-usp" name="usp" rows="3" placeholder="What differentiates your offering from competitors?"></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-competitors">Top competitors / benchmark websites</label>
+                  <textarea id="req-competitors" name="competitors" rows="3" placeholder="List key competitors and links if available."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-kpis">Primary success KPIs for this website</label>
+                  <textarea id="req-kpis" name="kpis" rows="3" placeholder="Examples: MQL volume, demo requests, booking rate, conversion rate, revenue, CAC reduction."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- ③ SCOPE -->
+            <div class="section-divider">
+              <h3>3. Scope & information architecture</h3>
+              <p>Define the expected scope so we can produce an accurate statement of work.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-package">Preferred engagement model *</label>
+                  <select id="req-package" name="package" required>
+                    <option value="starter">Starter - Static Website (up to 5 pages, from ₹3,500)</option>
+                    <option value="growth">Growth - Dynamic Website with CMS (from ₹10,500)</option>
+                    <option value="scale">Scale - Advanced Features and Integrations (from ₹24,500)</option>
+                    <option value="enterprise">Enterprise - Multi-workflow and Compliance Scope</option>
+                    <option value="custom">Custom Scope - Discovery Required</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-pages">Estimated page/screen count *</label>
+                  <select id="req-pages" name="page_count" required data-other-input="req-pages-other">
+                    <option value="">Select a range</option>
+                    <option>1-5 pages</option>
+                    <option>6-10 pages</option>
+                    <option>11-20 pages</option>
+                    <option>21-35 pages</option>
+                    <option>36-50 pages</option>
+                    <option>51-100 pages</option>
+                    <option>100+ pages</option>
+                    <option value="other">Other (custom range)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-pages-other-wrap" hidden>
+                  <label for="req-pages-other">Other page volume details *</label>
+                  <input type="text" id="req-pages-other" name="page_count_other" placeholder="e.g. 14 core pages + 40 product pages + dashboard screens">
+                </div>
+                <div class="form-field full">
+                  <label for="req-page-list">Planned sitemap / page list *</label>
+                  <textarea id="req-page-list" name="page_list" rows="3" required placeholder="Example: Home, About, Services, Service Detail, Case Studies, Blog, Contact, Legal pages."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-template-needs">Template requirements</label>
+                  <textarea id="req-template-needs" name="template_needs" rows="3" placeholder="Specify reusable page templates needed (landing page template, blog template, case study template, etc.)."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-v1-scope">Must-have scope for v1 launch</label>
+                  <textarea id="req-v1-scope" name="v1_scope" rows="3" placeholder="What is non-negotiable for phase 1 launch?"></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-future-phases">Planned phase 2 / future enhancements</label>
+                  <textarea id="req-future-phases" name="future_scope" rows="3" placeholder="Features intentionally deferred to later phases."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-core-cta">Primary calls-to-action to prioritize</label>
+                  <input type="text" id="req-core-cta" name="core_cta" placeholder="e.g. Book a demo, request quote, start trial, checkout">
+                </div>
+              </div>
+            </div>
+
+            <!-- ④ BRAND / DESIGN / CONTENT -->
+            <div class="section-divider">
+              <h3>4. Brand, design & content inputs</h3>
+              <p>Clear inputs at this stage reduce design revisions and production delays.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-brand-assets">Available brand assets *</label>
+                  <select id="req-brand-assets" name="brand_assets" required data-other-input="req-brand-assets-other">
+                    <option value="">Select one</option>
+                    <option>Full brand system (logo, typography, color palette, guidelines)</option>
+                    <option>Logo and color palette available</option>
+                    <option>Logo only</option>
+                    <option>Moodboard / references only</option>
+                    <option>Existing assets need rebrand upgrade</option>
+                    <option>No brand assets yet (branding support required)</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-content-status">Content readiness status *</label>
+                  <select id="req-content-status" name="content_status" required data-other-input="req-content-status-other">
+                    <option value="">Select one</option>
+                    <option>Content ready (final copy available)</option>
+                    <option>Content partially ready</option>
+                    <option>Draft content exists, editing needed</option>
+                    <option>Need copywriting support</option>
+                    <option>Need complete content strategy + copy</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-brand-assets-other-wrap" hidden>
+                  <label for="req-brand-assets-other">Other brand asset details *</label>
+                  <input type="text" id="req-brand-assets-other" name="brand_assets_other" placeholder="Describe available/required brand assets">
+                </div>
+                <div class="form-field full" id="req-content-status-other-wrap" hidden>
+                  <label for="req-content-status-other">Other content status details *</label>
+                  <input type="text" id="req-content-status-other" name="content_status_other" placeholder="Describe your current content readiness">
+                </div>
+                <div class="form-field full">
+                  <label for="req-references">Reference websites (2-3) and rationale</label>
+                  <textarea id="req-references" name="references" rows="4" placeholder="Share URLs and mention what should be emulated (layout, navigation, messaging style, conversion flow, interaction design)."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-assets-link">Shared assets folder URL (Drive / Dropbox / Notion)</label>
+                  <input type="url" id="req-assets-link" name="assets_link" placeholder="https://drive.google.com/...">
+                </div>
+                <div class="form-field">
+                  <label for="req-content-owner">Who owns content delivery?</label>
+                  <select id="req-content-owner" name="content_owner" data-other-input="req-content-owner-other">
+                    <option value="">Select one</option>
+                    <option>Client team provides all content</option>
+                    <option>Client provides outlines; agency refines final copy</option>
+                    <option>Shared ownership (client + agency)</option>
+                    <option>Agency writes all core pages</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-content-migration">Content migration required?</label>
+                  <select id="req-content-migration" name="content_migration" data-other-input="req-content-migration-other">
+                    <option value="">Select one</option>
+                    <option>No migration needed</option>
+                    <option>Partial migration</option>
+                    <option>Full migration from existing site</option>
+                    <option>Migration from multiple source systems</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-content-owner-other-wrap" hidden>
+                  <label for="req-content-owner-other">Other content ownership details *</label>
+                  <input type="text" id="req-content-owner-other" name="content_owner_other" placeholder="Describe ownership split and responsibilities">
+                </div>
+                <div class="form-field full" id="req-content-migration-other-wrap" hidden>
+                  <label for="req-content-migration-other">Other migration details *</label>
+                  <input type="text" id="req-content-migration-other" name="content_migration_other" placeholder="Describe migration scope and source systems">
+                </div>
+                <div class="form-field">
+                  <label for="req-content-deadline">Content handover target date</label>
+                  <input type="date" id="req-content-deadline" name="content_deadline">
+                </div>
+                <div class="form-field">
+                  <label for="req-brand-tone">Preferred brand tone</label>
+                  <select id="req-brand-tone" name="brand_tone" data-other-input="req-brand-tone-other">
+                    <option value="">Select one</option>
+                    <option>Professional / Corporate</option>
+                    <option>Premium / Authoritative</option>
+                    <option>Modern / Friendly</option>
+                    <option>Bold / Disruptive</option>
+                    <option>Minimal / Technical</option>
+                    <option>Playful / Youthful</option>
+                    <option>Editorial / Elegant</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-design-system">Design system needed?</label>
+                  <select id="req-design-system" name="design_system" data-other-input="req-design-system-other">
+                    <option value="">Select one</option>
+                    <option>Basic component styling only</option>
+                    <option>Full reusable design system</option>
+                    <option>Design system audit + extension</option>
+                    <option>Not required</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-brand-tone-other-wrap" hidden>
+                  <label for="req-brand-tone-other">Other brand tone details *</label>
+                  <input type="text" id="req-brand-tone-other" name="brand_tone_other" placeholder="Describe desired tone and style references">
+                </div>
+                <div class="form-field full" id="req-design-system-other-wrap" hidden>
+                  <label for="req-design-system-other">Other design-system details *</label>
+                  <input type="text" id="req-design-system-other" name="design_system_other" placeholder="Describe specific design-system requirements">
+                </div>
+              </div>
+            </div>
+
+            <!-- ⑤ FEATURES -->
+            <div class="section-divider">
+              <h3>5. Functional requirements</h3>
+              <p>Select the capabilities required for v1 launch. This directly affects scope and estimate.</p>
+
+              <div class="choice-grid">
+                <label class="choice-item"><input type="checkbox" name="feature" value="cms"> CMS for self-managed updates</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="blog"> Blog / knowledge base</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="ecommerce" id="feature-ecommerce"> E-commerce catalog and checkout</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="payments"> Payment gateway integration</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="booking"> Appointment / calendar booking</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="whatsapp"> WhatsApp lead channel</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="chat"> Live chat / chatbot</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="multilingual"> Multi-language support</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="seo"> Technical SEO foundation (metadata, sitemap, schema)</label>
+                <label class="choice-item"><input type="checkbox" name="feature" value="analytics"> Analytics and conversion tracking (GA4/GTM)</label>
+              </div>
+
+              <div class="conditional-block" id="ecommerce-extra" hidden>
+                <p class="helper-text" style="margin-bottom: 0.6rem;">E-commerce details:</p>
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="req-product-count">Expected product / SKU volume</label>
+                    <input type="text" id="req-product-count" name="product_count" placeholder="e.g. 50 products, 200 SKUs">
+                  </div>
+                  <div class="form-field">
+                    <label for="req-payment-gateway">Preferred payment provider</label>
+                    <input type="text" id="req-payment-gateway" name="payment_gateway" placeholder="Razorpay / Stripe / PayU / To be decided">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field" style="margin-top: 0.8rem;">
+                <label for="req-integrations">Required third-party integrations / APIs</label>
+                <textarea id="req-integrations" name="integrations" rows="3" placeholder="Examples: HubSpot, Salesforce, Zoho, GA4/GTM, Meta Pixel, Mailchimp, Shiprocket, internal APIs."></textarea>
+              </div>
+              <div class="form-field full" style="margin-top: 0.8rem;">
+                <label>Integration categories (multi-select)</label>
+                <div class="choice-grid">
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="CRM / Sales Ops"> CRM / Sales Ops</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="Marketing Automation"> Marketing Automation</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="Analytics / Tracking"> Analytics / Tracking</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="Payments / Finance"> Payments / Finance</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="Logistics / Fulfilment"> Logistics / Fulfilment</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="Support / Helpdesk"> Support / Helpdesk</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="Auth / SSO"> Auth / SSO</label>
+                  <label class="choice-item"><input type="checkbox" name="integration_category" value="ERP / Inventory"> ERP / Inventory</label>
+                  <label class="choice-item"><input type="checkbox" id="req-integration-category-other-toggle" name="integration_category" value="other"> Other integration category</label>
+                </div>
+              </div>
+              <div class="form-field" id="req-integration-categories-other-wrap" hidden>
+                <label for="req-integration-categories-other">Other integration categories *</label>
+                <input type="text" id="req-integration-categories-other" name="integration_categories_other" placeholder="Specify additional integration categories">
+              </div>
+              <div class="form-field" style="margin-top: 0.8rem;">
+                <label for="req-v1-features">Priority ranking for features (v1)</label>
+                <textarea id="req-v1-features" name="v1_feature_priority" rows="3" placeholder="Mention top 3 highest-priority features for launch."></textarea>
+              </div>
+            </div>
+
+            <!-- ⑥ INFRASTRUCTURE / TIMELINE / BUDGET -->
+            <div class="section-divider">
+              <h3>6. Infrastructure, timeline & budget</h3>
+              <p>These details are used to plan delivery cadence, resourcing, and commercial terms.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-domain-hosting">Domain / hosting readiness *</label>
+                  <select id="req-domain-hosting" name="domain_hosting" required data-other-input="req-domain-hosting-other">
+                    <option value="">Select one</option>
+                    <option>Domain and hosting are active</option>
+                    <option>Domain active; managed hosting setup required</option>
+                    <option>Domain available; hosting setup required</option>
+                    <option>Existing hosting needs migration / optimization</option>
+                    <option>Support required for both domain and hosting</option>
+                    <option>Need infrastructure recommendation</option>
+                    <option>Cloud infrastructure required (AWS / GCP / Azure)</option>
+                    <option>Headless deployment stack required (Vercel / Netlify + CMS)</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-launch-date">Target launch date *</label>
+                  <input type="date" id="req-launch-date" name="launch_date" required>
+                </div>
+                <div class="form-field">
+                  <label for="req-budget">Approved budget range *</label>
+                  <select id="req-budget" name="budget" required data-other-input="req-budget-other">
+                    <option value="">Select a range</option>
+                    <option>₹3,500 – ₹10,500</option>
+                    <option>₹10,500 – ₹21,000</option>
+                    <option>₹21,000 – ₹42,000</option>
+                    <option>₹42,000 – ₹84,000</option>
+                    <option>₹84,000 – ₹1,50,000</option>
+                    <option>₹1,50,000 – ₹3,00,000</option>
+                    <option>₹3,00,000+</option>
+                    <option>Not sure yet — need a quote</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-support">Post-launch support preference</label>
+                  <select id="req-support" name="support" data-other-input="req-support-other">
+                    <option value="">Select one</option>
+                    <option>Ongoing monthly support required</option>
+                    <option>Quarterly maintenance retainer</option>
+                    <option>Annual support contract</option>
+                    <option>On-demand support hours</option>
+                    <option>One-time build only</option>
+                    <option>Undecided</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-domain-hosting-other-wrap" hidden>
+                  <label for="req-domain-hosting-other">Other domain/hosting details *</label>
+                  <input type="text" id="req-domain-hosting-other" name="domain_hosting_other" placeholder="Describe your infrastructure readiness and requirements">
+                </div>
+                <div class="form-field full" id="req-budget-other-wrap" hidden>
+                  <label for="req-budget-other">Other budget details *</label>
+                  <input type="text" id="req-budget-other" name="budget_other" placeholder="Specify your budget range or allocation constraints">
+                </div>
+                <div class="form-field full" id="req-support-other-wrap" hidden>
+                  <label for="req-support-other">Other support preference details *</label>
+                  <input type="text" id="req-support-other" name="support_other" placeholder="Specify support expectations and engagement model">
+                </div>
+                <div class="form-field">
+                  <label for="req-budget-build">Budget split: build phase</label>
+                  <input type="text" id="req-budget-build" name="budget_build" placeholder="e.g. Up to ₹21,000">
+                </div>
+                <div class="form-field">
+                  <label for="req-budget-ops">Budget split: ongoing monthly ops</label>
+                  <input type="text" id="req-budget-ops" name="budget_ops" placeholder="e.g. ₹2,000 - ₹5,000/month">
+                </div>
+                <div class="form-field">
+                  <label for="req-payment-terms">Preferred payment terms</label>
+                  <select id="req-payment-terms" name="payment_terms" data-other-input="req-payment-terms-other">
+                    <option value="">Select one</option>
+                    <option>50% upfront / 50% on launch</option>
+                    <option>40% upfront / 30% mid / 30% on launch</option>
+                    <option>30% upfront / 40% midpoint / 30% on launch</option>
+                    <option>Monthly invoice cycle</option>
+                    <option>Milestone-based custom split</option>
+                    <option>Need recommendation</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-payment-terms-other-wrap" hidden>
+                  <label for="req-payment-terms-other">Other payment term details *</label>
+                  <input type="text" id="req-payment-terms-other" name="payment_terms_other" placeholder="Specify your preferred payment schedule">
+                </div>
+              </div>
+            </div>
+
+            <!-- ⑦ TECHNICAL / SEO / COMPLIANCE -->
+            <div class="section-divider">
+              <h3>7. Technical, SEO, accessibility & compliance</h3>
+              <p>Capture technical constraints and quality requirements expected for launch.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-cms-preference">Preferred CMS / platform</label>
+                  <input type="text" id="req-cms-preference" name="cms_preference" placeholder="e.g. WordPress, Webflow, Headless CMS, custom">
+                </div>
+                <div class="form-field">
+                  <label for="req-tech-stack">Preferred tech stack</label>
+                  <input type="text" id="req-tech-stack" name="tech_stack" placeholder="e.g. Next.js, React, Laravel, static">
+                </div>
+                <div class="form-field">
+                  <label for="req-hosting-preference">Hosting preference</label>
+                  <input type="text" id="req-hosting-preference" name="hosting_preference" placeholder="e.g. Vercel, AWS, cPanel, managed WP">
+                </div>
+                <div class="form-field">
+                  <label for="req-browser-support">Browser/device support needs</label>
+                  <input type="text" id="req-browser-support" name="browser_support" placeholder="e.g. Latest 2 versions + Safari iOS">
+                </div>
+                <div class="form-field full">
+                  <label for="req-seo-keywords">SEO priorities (keywords/pages)</label>
+                  <textarea id="req-seo-keywords" name="seo_keywords" rows="3" placeholder="List priority keywords, target pages, or SEO goals."></textarea>
+                </div>
+                <div class="form-field">
+                  <label for="req-seo-regions">Geo targeting for SEO</label>
+                  <input type="text" id="req-seo-regions" name="seo_regions" placeholder="e.g. India, UAE, US">
+                </div>
+                <div class="form-field">
+                  <label for="req-redirect-plan">URL redirect plan needed?</label>
+                  <select id="req-redirect-plan" name="redirect_plan" data-other-input="req-redirect-plan-other">
+                    <option value="">Select one</option>
+                    <option>Yes - include old to new URL mapping</option>
+                    <option>Yes - include legacy SEO preservation + backlink mapping</option>
+                    <option>No - new domain/structure</option>
+                    <option>Unsure</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-performance-target">Performance target</label>
+                  <select id="req-performance-target" name="performance_target" data-other-input="req-performance-target-other">
+                    <option value="">Select one</option>
+                    <option>Core Web Vitals pass (all key pages)</option>
+                    <option>LCP under 2.5s on mobile</option>
+                    <option>Lighthouse 85+ overall</option>
+                    <option>Lighthouse 90+ overall</option>
+                    <option>Lighthouse 95+ on critical templates</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-accessibility-level">Accessibility requirement</label>
+                  <select id="req-accessibility-level" name="accessibility_level" data-other-input="req-accessibility-level-other">
+                    <option value="">Select one</option>
+                    <option>Standard accessibility best practices</option>
+                    <option>WCAG 2.1 AA alignment required</option>
+                    <option>WCAG audit and remediation required</option>
+                    <option>Accessibility statement + legal review support</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-redirect-plan-other-wrap" hidden>
+                  <label for="req-redirect-plan-other">Other redirect plan details *</label>
+                  <input type="text" id="req-redirect-plan-other" name="redirect_plan_other" placeholder="Describe redirect/migration constraints">
+                </div>
+                <div class="form-field full" id="req-performance-target-other-wrap" hidden>
+                  <label for="req-performance-target-other">Other performance target details *</label>
+                  <input type="text" id="req-performance-target-other" name="performance_target_other" placeholder="Specify custom performance benchmarks">
+                </div>
+                <div class="form-field full" id="req-accessibility-level-other-wrap" hidden>
+                  <label for="req-accessibility-level-other">Other accessibility requirement details *</label>
+                  <input type="text" id="req-accessibility-level-other" name="accessibility_level_other" placeholder="Specify accessibility/compliance expectations">
+                </div>
+              </div>
+
+              <p style="margin-top: 0.8rem; margin-bottom: 0.5rem;" class="helper-text">Security requirements</p>
+              <div class="choice-grid">
+                <label class="choice-item"><input type="checkbox" name="security_req" value="WAF and bot mitigation"> WAF and bot mitigation</label>
+                <label class="choice-item"><input type="checkbox" name="security_req" value="MFA for admin access"> MFA for admin access</label>
+                <label class="choice-item"><input type="checkbox" name="security_req" value="Regular vulnerability patching"> Regular vulnerability patching</label>
+                <label class="choice-item"><input type="checkbox" name="security_req" value="Periodic backup and restore plan"> Periodic backup and restore plan</label>
+              </div>
+
+              <p style="margin-top: 0.8rem; margin-bottom: 0.5rem;" class="helper-text">Compliance requirements</p>
+              <div class="choice-grid">
+                <label class="choice-item"><input type="checkbox" name="compliance_req" value="GDPR"> GDPR</label>
+                <label class="choice-item"><input type="checkbox" name="compliance_req" value="CCPA"> CCPA</label>
+                <label class="choice-item"><input type="checkbox" name="compliance_req" value="HIPAA"> HIPAA</label>
+                <label class="choice-item"><input type="checkbox" name="compliance_req" value="PCI DSS"> PCI DSS</label>
+                <label class="choice-item"><input type="checkbox" name="compliance_req" value="Cookie consent and policy pages"> Cookie consent and policy pages</label>
+              </div>
+
+              <div class="form-field" style="margin-top: 0.8rem;">
+                <label for="req-privacy-preferences">Privacy, legal, or data-handling notes</label>
+                <textarea id="req-privacy-preferences" name="privacy_notes" rows="3" placeholder="Include legal review requirements, consent language, retention policies, etc."></textarea>
+              </div>
+            </div>
+
+            <!-- ⑧ LOCALIZATION / GOVERNANCE -->
+            <div class="section-divider">
+              <h3>8. Localization, workflow & approvals</h3>
+              <p>Define operating regions, language expectations, and delivery governance.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-languages">Languages required</label>
+                  <input type="text" id="req-languages" name="languages" placeholder="e.g. English, Hindi, Arabic">
+                </div>
+                <div class="form-field">
+                  <label for="req-currencies">Currencies required</label>
+                  <input type="text" id="req-currencies" name="currencies" placeholder="e.g. INR, USD, AED">
+                </div>
+                <div class="form-field">
+                  <label for="req-regions">Target regions / countries</label>
+                  <input type="text" id="req-regions" name="regions" placeholder="e.g. India, UAE, North America">
+                </div>
+                <div class="form-field">
+                  <label for="req-workflow-stakeholders">Review stakeholders</label>
+                  <input type="text" id="req-workflow-stakeholders" name="workflow_stakeholders" placeholder="e.g. Marketing head, CTO, legal reviewer">
+                </div>
+                <div class="form-field">
+                  <label for="req-feedback-cycle">Feedback cycle preference</label>
+                  <select id="req-feedback-cycle" name="feedback_cycle" data-other-input="req-feedback-cycle-other">
+                    <option value="">Select one</option>
+                    <option>Weekly review calls</option>
+                    <option>Bi-weekly review calls</option>
+                    <option>Async review in shared docs/tools</option>
+                    <option>Daily sync during critical milestones</option>
+                    <option>Single consolidated review each milestone</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-feedback-cycle-other-wrap" hidden>
+                  <label for="req-feedback-cycle-other">Other feedback-cycle details *</label>
+                  <input type="text" id="req-feedback-cycle-other" name="feedback_cycle_other" placeholder="Describe your review and approval cadence">
+                </div>
+                <div class="form-field">
+                  <label for="req-approval-sla">Typical internal approval SLA</label>
+                  <input type="text" id="req-approval-sla" name="approval_sla" placeholder="e.g. 2 business days per review round">
+                </div>
+                <div class="form-field full">
+                  <label for="req-milestones">Critical milestones / campaign dates</label>
+                  <textarea id="req-milestones" name="milestones" rows="3" placeholder="List milestone dates for wireframes, design approval, UAT, and launch."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="req-dependencies">Known dependencies / blockers</label>
+                  <textarea id="req-dependencies" name="dependencies" rows="3" placeholder="Examples: pending branding, delayed content approvals, legal sign-off, API readiness."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- ⑨ POST-LAUNCH -->
+            <div class="section-divider">
+              <h3>9. Post-launch operations & handover</h3>
+              <p>Specify support expectations, team enablement, and handover deliverables.</p>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="req-sla">Preferred support SLA</label>
+                  <select id="req-sla" name="support_sla" data-other-input="req-sla-other">
+                    <option value="">Select one</option>
+                    <option>Business-hours SLA</option>
+                    <option>Priority response within 24 hours</option>
+                    <option>Critical issue response within 4-8 hours</option>
+                    <option>24x7 SLA for critical incidents</option>
+                    <option>Dedicated account manager + escalation matrix</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="req-training">Team training requirement</label>
+                  <select id="req-training" name="training_requirement" data-other-input="req-training-other">
+                    <option value="">Select one</option>
+                    <option>CMS training session needed</option>
+                    <option>Documentation only</option>
+                    <option>Recorded walkthrough videos</option>
+                    <option>Admin + editor role-based training</option>
+                    <option>No training required</option>
+                    <option value="other">Other (please specify)</option>
+                  </select>
+                </div>
+                <div class="form-field full" id="req-sla-other-wrap" hidden>
+                  <label for="req-sla-other">Other support SLA details *</label>
+                  <input type="text" id="req-sla-other" name="support_sla_other" placeholder="Specify desired SLA and escalation timings">
+                </div>
+                <div class="form-field full" id="req-training-other-wrap" hidden>
+                  <label for="req-training-other">Other training requirement details *</label>
+                  <input type="text" id="req-training-other" name="training_requirement_other" placeholder="Describe training expectations for your teams">
+                </div>
+                <div class="form-field">
+                  <label for="req-maintenance-window">Maintenance window preference</label>
+                  <input type="text" id="req-maintenance-window" name="maintenance_window" placeholder="e.g. Weekends 10 PM - 2 AM IST">
+                </div>
+                <div class="form-field full">
+                  <label for="req-handover">Handover expectations</label>
+                  <textarea id="req-handover" name="handover_expectations" rows="3" placeholder="Mention required handover docs, credentials checklist, deployment guide, and ownership transfer details."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- ⑩ ADDITIONAL NOTES -->
+            <div class="section-divider">
+              <h3>10. Risks, constraints & additional notes</h3>
+              <p>Include legal/compliance requirements, dependency risks, internal approval constraints, or platform preferences.</p>
+              <div class="form-field">
+                <textarea id="req-notes" name="notes" rows="5" placeholder="Examples: compliance requirements (HIPAA/GDPR), security review process, preferred stack (WordPress/Webflow/custom), migration constraints, or fixed campaign deadlines."></textarea>
+              </div>
+            </div>
+
+            <!-- Estimate Panel -->
+            <div class="section-divider" id="req-estimate-section" hidden aria-hidden="true">
+              <h3>Estimated project cost range</h3>
+              <p>This is a preliminary estimate generated from your scope selections.</p>
+
+              <div class="req-estimate-card" id="req-estimate-card">
+                <div class="req-estimate-header">
+                  <span class="req-estimate-badge">Auto-Estimated</span>
+                  <span class="req-estimate-range" id="req-est-range">Calculating...</span>
+                </div>
+
+                <div class="req-estimate-breakdown" id="req-est-breakdown">
+                  <div class="req-est-row">
+                    <span>Base (Package)</span>
+                    <span id="req-est-base">—</span>
+                  </div>
+                  <div class="req-est-row">
+                    <span>Pages</span>
+                    <span id="req-est-pages">—</span>
+                  </div>
+                  <div class="req-est-row">
+                    <span>Selected Features</span>
+                    <span id="req-est-features">—</span>
+                  </div>
+                  <div class="req-est-row">
+                    <span>Content / Copywriting</span>
+                    <span id="req-est-content">—</span>
+                  </div>
+                  <div class="req-est-row">
+                    <span>Post-Launch Support</span>
+                    <span id="req-est-support">—</span>
+                  </div>
+                  <div class="req-est-divider"></div>
+                  <div class="req-est-row req-est-total">
+                    <span>Estimated Range</span>
+                    <span id="req-est-total">—</span>
+                  </div>
+                </div>
+
+                <div class="req-estimate-disclaimer">
+                  <span class="req-est-disclaimer-icon">ℹ️</span>
+                  <p>This is a pre-discovery estimate, not a final commercial quote. Final pricing is confirmed after scope validation, technical review, and delivery planning.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consent & Submit -->
+            <div class="section-divider">
+              <label class="choice-item" style="display: inline-flex;">
+                <input type="checkbox" id="req-consent" name="consent" required>
+                I confirm the information provided is accurate and I am authorized to submit this brief on behalf of my organization. *
+              </label>
+
+              <div class="btn-row" style="margin-top: 0.95rem;">
+                <button type="submit" class="btn-primary">Submit Requirements Brief</button>
+                <a href="services.html" class="btn-ghost">Return to Services</a>
+              </div>
+              <p class="form-message" id="requirements-message" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-box">
+        <p>&copy; <span data-current-year></span> Gelistra. Built for growth-focused brands.</p>
+        <div class="footer-stack">
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="estimator.html">Estimator</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-links footer-legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-and-conditions.html">Terms</a>
+            <a href="refund-cancellation-policy.html">Refund Policy</a>
+            <a href="cookie-policy.html">Cookie Policy</a>
+            <a href="disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

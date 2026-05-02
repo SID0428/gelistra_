@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Gelistra</title>
+  <meta name="description" content="Start your website project with Gelistra. Share requirements, timeline, and budget to get a custom proposal.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Gelistra Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Gelistra
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html" data-nav>Home</a>
+        <a href="about.html" data-nav>About</a>
+        <a href="services.html" data-nav>Services</a>
+        <a href="portfolio.html" data-nav>Portfolio</a>
+        <a href="estimator.html" data-nav>Estimator</a>
+        <a href="contact.html" data-nav>Contact</a>
+        <a href="contact.html" class="btn-mini">Start Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow reveal">Start Here</span>
+        <h1 class="reveal">Tell us what you want to build and we will map the fastest path.</h1>
+        <p class="reveal">Share your goals, required features, timeline, and budget range. We will respond with a clear proposal and recommended package that stays around 30% below typical agency pricing.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-layout">
+        <div class="contact-cards">
+          <article class="contact-card reveal">
+            <h3>Project Email</h3>
+            <p>Send your brief or existing website link and we will review before a call.</p>
+            <a href="mailto:hello@gelistra.com">hello@gelistra.com</a>
+          </article>
+
+          <article class="contact-card reveal">
+            <h3>Discovery Call</h3>
+            <p>Prefer a quick discussion first? Schedule a 30-minute strategy call.</p>
+            <a href="#">Book a call slot</a>
+          </article>
+
+          <article class="contact-card reveal">
+            <h3>Support Window</h3>
+            <p>Current response time for new inquiries is usually within one business day.</p>
+            <a href="tel:+18005550123">+1 (800) 555-0123</a>
+          </article>
+
+          <aside class="estimator reveal">
+            <h3>Quick Project Estimator</h3>
+            <p>Use this to estimate a realistic range before submitting your inquiry.</p>
+
+            <div class="range-row">
+              <label for="page-count">Number of pages</label>
+              <input id="page-count" type="range" min="4" max="40" value="12">
+            </div>
+
+            <div class="check-row">
+              <label><input type="checkbox" id="est-cms" checked> Need CMS editing access</label>
+              <label><input type="checkbox" id="est-seo" checked> Include advanced SEO setup</label>
+              <label><input type="checkbox" id="est-copy"> Need conversion copywriting support</label>
+            </div>
+
+            <div class="estimate-box">
+              <h4>Estimated range</h4>
+              <p id="estimate-value">INR 0 - INR 0</p>
+              <p id="estimate-meta">12 pages | CMS Yes | SEO Yes | Copy No</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="form-card reveal">
+          <h2 class="section-title" style="font-size: 1.7rem; margin-bottom: 0.7rem;">Project Inquiry Form</h2>
+          <p class="section-copy" style="margin-bottom: 1rem;">Fill this out and we will send your roadmap, estimate, and timeline recommendation.</p>
+
+          <form id="lead-form" novalidate>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="name">Full name *</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+
+              <div class="form-field">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+
+              <div class="form-field">
+                <label for="company">Company / Brand</label>
+                <input type="text" id="company" name="company">
+              </div>
+
+              <div class="form-field">
+                <label for="website">Current website</label>
+                <input type="url" id="website" name="website" placeholder="https://">
+              </div>
+
+              <div class="form-field">
+                <label for="service">Required service *</label>
+                <select id="service" name="service" required>
+                  <option value="">Select one</option>
+                  <option>New Website Build</option>
+                  <option>Website Redesign</option>
+                  <option>Landing Page System</option>
+                  <option>Performance + SEO Revamp</option>
+                  <option>Ongoing Growth Support</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="budget">Budget range *</label>
+                <select id="budget" name="budget" required>
+                  <option value="">Select one</option>
+                  <option>INR 3,500 - INR 10,500</option>
+                  <option>INR 10,500 - INR 21,000</option>
+                  <option>INR 21,000 - INR 42,000</option>
+                  <option>INR 42,000 - INR 84,000</option>
+                  <option>INR 84,000+</option>
+                </select>
+              </div>
+
+              <div class="form-field full">
+                <label for="timeline">Preferred launch timeline</label>
+                <select id="timeline" name="timeline">
+                  <option>2-4 weeks</option>
+                  <option>1-2 months</option>
+                  <option>2-3 months</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+
+              <div class="form-field full">
+                <label for="details">Project brief *</label>
+                <textarea id="details" name="details" rows="5" required placeholder="Tell us your goals, required pages, features, and any references."></textarea>
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 1rem;">
+              <button type="submit" class="btn-primary">Send Inquiry</button>
+              <a href="services.html" class="btn-ghost">Compare Packages</a>
+            </div>
+            <p class="form-message" id="form-message" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-box">
+        <p>&copy; <span data-current-year></span> Gelistra. Built for growth-focused brands.</p>
+        <div class="footer-stack">
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="estimator.html">Estimator</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-links footer-legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-and-conditions.html">Terms</a>
+            <a href="refund-cancellation-policy.html">Refund Policy</a>
+            <a href="cookie-policy.html">Cookie Policy</a>
+            <a href="disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

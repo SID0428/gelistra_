@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Estimator | Gelistra</title>
+  <meta name="description" content="Get an instant, detailed website project cost estimate based on your specific requirements — pages, features, design complexity, and more.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Gelistra Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Gelistra
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav">
+        <a href="index.html" data-nav>Home</a>
+        <a href="about.html" data-nav>About</a>
+        <a href="services.html" data-nav>Services</a>
+        <a href="portfolio.html" data-nav>Portfolio</a>
+        <a href="estimator.html" data-nav class="active">Estimator</a>
+        <a href="contact.html" data-nav>Contact</a>
+        <a href="contact.html" class="btn-mini">Start Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow reveal">Instant Quote</span>
+        <h1 class="reveal">Project Estimator.</h1>
+        <p class="reveal">Configure every aspect of your website project and get a realistic cost projection in real-time. This estimator reflects our affordability benchmark that is around 30% lower than typical agency pricing.</p>
+      </div>
+    </section>
+
+    <section class="section" id="estimator-section">
+      <div class="container">
+        <div class="est-layout reveal">
+
+          <!-- ── Left: Configuration Panel ── -->
+          <div class="est-config">
+            <div class="est-config-header">
+              <h2 class="section-title" style="font-size: 1.5rem; margin-bottom: 0.3rem;">Configure your build</h2>
+              <p class="section-copy" style="margin-bottom: 0;">Adjust each factor to see cost variations instantly.</p>
+            </div>
+
+            <!-- Step 1: Website Type -->
+            <div class="est-step" id="est-step-type">
+              <div class="est-step-head">
+                <span class="est-step-num">01</span>
+                <div>
+                  <h3>Website Type</h3>
+                  <p>What kind of website are you building?</p>
+                </div>
+              </div>
+              <div class="est-option-grid" id="est-type-grid">
+                <button class="est-option active" data-type="static" data-base="2100">
+                  <span class="est-option-icon">📄</span>
+                  <span class="est-option-label">Static / Portfolio</span>
+                  <span class="est-option-desc">Simple, fast-loading</span>
+                </button>
+                <button class="est-option" data-type="business" data-base="3500">
+                  <span class="est-option-icon">🏢</span>
+                  <span class="est-option-label">Business Website</span>
+                  <span class="est-option-desc">Lead-generating site</span>
+                </button>
+                <button class="est-option" data-type="ecommerce" data-base="8400">
+                  <span class="est-option-icon">🛒</span>
+                  <span class="est-option-label">E-Commerce</span>
+                  <span class="est-option-desc">Online store setup</span>
+                </button>
+                <button class="est-option" data-type="webapp" data-base="12600">
+                  <span class="est-option-icon">⚙️</span>
+                  <span class="est-option-label">Web Application</span>
+                  <span class="est-option-desc">Custom functionality</span>
+                </button>
+                <button class="est-option" data-type="landing" data-base="1400">
+                  <span class="est-option-icon">🎯</span>
+                  <span class="est-option-label">Landing Page</span>
+                  <span class="est-option-desc">Campaign-ready page</span>
+                </button>
+                <button class="est-option" data-type="blog" data-base="2800">
+                  <span class="est-option-icon">📝</span>
+                  <span class="est-option-label">Blog / Magazine</span>
+                  <span class="est-option-desc">Content-first platform</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Number of Pages -->
+            <div class="est-step" id="est-step-pages">
+              <div class="est-step-head">
+                <span class="est-step-num">02</span>
+                <div>
+                  <h3>Number of Pages</h3>
+                  <p>How many pages or screens does your project need?</p>
+                </div>
+              </div>
+              <div class="est-slider-wrap">
+                <input type="range" id="est-pages" min="1" max="50" value="5" class="est-range">
+                <div class="est-slider-labels">
+                  <span>1 page</span>
+                  <span class="est-slider-value" id="est-pages-display">5 pages</span>
+                  <span>50 pages</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Design Complexity -->
+            <div class="est-step" id="est-step-design">
+              <div class="est-step-head">
+                <span class="est-step-num">03</span>
+                <div>
+                  <h3>Design Complexity</h3>
+                  <p>Select the level of visual polish and custom design work.</p>
+                </div>
+              </div>
+              <div class="est-tier-row" id="est-design-tier">
+                <button class="est-tier active" data-tier="standard" data-mult="1">
+                  <span class="est-tier-name">Standard</span>
+                  <span class="est-tier-desc">Clean and professional template-based design</span>
+                  <span class="est-tier-price">1×</span>
+                </button>
+                <button class="est-tier" data-tier="premium" data-mult="1.5">
+                  <span class="est-tier-name">Premium</span>
+                  <span class="est-tier-desc">Custom UI with animations and micro-interactions</span>
+                  <span class="est-tier-price">1.5×</span>
+                </button>
+                <button class="est-tier" data-tier="luxury" data-mult="2.2">
+                  <span class="est-tier-name">Luxury</span>
+                  <span class="est-tier-desc">Bespoke design with motion graphics and 3D elements</span>
+                  <span class="est-tier-price">2.2×</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Features & Add-ons -->
+            <div class="est-step" id="est-step-features">
+              <div class="est-step-head">
+                <span class="est-step-num">04</span>
+                <div>
+                  <h3>Features & Add-ons</h3>
+                  <p>Select the features you need — each adds to your total.</p>
+                </div>
+              </div>
+              <div class="est-feature-grid">
+                <label class="est-feature" id="feat-cms">
+                  <input type="checkbox" data-cost="3500" checked>
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">📋</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">CMS Integration</span>
+                      <span class="est-feature-price">+ ₹3,500</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-seo">
+                  <input type="checkbox" data-cost="2100" checked>
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">🔍</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Advanced SEO Setup</span>
+                      <span class="est-feature-price">+ ₹2,100</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-analytics">
+                  <input type="checkbox" data-cost="1400">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">📊</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Analytics & Tracking</span>
+                      <span class="est-feature-price">+ ₹1,400</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-copy">
+                  <input type="checkbox" data-cost="2800">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">✍️</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Copywriting Support</span>
+                      <span class="est-feature-price">+ ₹2,800</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-payment">
+                  <input type="checkbox" data-cost="4200">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">💳</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Payment Gateway</span>
+                      <span class="est-feature-price">+ ₹4,200</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-auth">
+                  <input type="checkbox" data-cost="2800">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">🔐</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">User Auth & Accounts</span>
+                      <span class="est-feature-price">+ ₹2,800</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-forms">
+                  <input type="checkbox" data-cost="1750">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">📬</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Advanced Forms & Leads</span>
+                      <span class="est-feature-price">+ ₹1,750</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-multilang">
+                  <input type="checkbox" data-cost="3500">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">🌐</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Multi-language Support</span>
+                      <span class="est-feature-price">+ ₹3,500</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-chat">
+                  <input type="checkbox" data-cost="2100">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">💬</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">Live Chat Integration</span>
+                      <span class="est-feature-price">+ ₹2,100</span>
+                    </span>
+                  </span>
+                </label>
+                <label class="est-feature" id="feat-api">
+                  <input type="checkbox" data-cost="4900">
+                  <span class="est-feature-body">
+                    <span class="est-feature-icon">🔗</span>
+                    <span class="est-feature-info">
+                      <span class="est-feature-name">3rd-Party API Integration</span>
+                      <span class="est-feature-price">+ ₹4,900</span>
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Step 5: Timeline / Urgency -->
+            <div class="est-step" id="est-step-timeline">
+              <div class="est-step-head">
+                <span class="est-step-num">05</span>
+                <div>
+                  <h3>Timeline & Urgency</h3>
+                  <p>Faster delivery attracts a rush premium.</p>
+                </div>
+              </div>
+              <div class="est-tier-row" id="est-timeline-tier">
+                <button class="est-tier active" data-timeline="standard" data-rush="1">
+                  <span class="est-tier-name">Standard</span>
+                  <span class="est-tier-desc">4 – 6 weeks delivery</span>
+                  <span class="est-tier-price">No rush fee</span>
+                </button>
+                <button class="est-tier" data-timeline="fast" data-rush="1.2">
+                  <span class="est-tier-name">Fast Track</span>
+                  <span class="est-tier-desc">2 – 3 weeks delivery</span>
+                  <span class="est-tier-price">+20%</span>
+                </button>
+                <button class="est-tier" data-timeline="urgent" data-rush="1.5">
+                  <span class="est-tier-name">Urgent</span>
+                  <span class="est-tier-desc">Under 2 weeks</span>
+                  <span class="est-tier-price">+50%</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 6: Support Plan -->
+            <div class="est-step" id="est-step-support">
+              <div class="est-step-head">
+                <span class="est-step-num">06</span>
+                <div>
+                  <h3>Post-Launch Support</h3>
+                  <p>Optional ongoing maintenance and optimization after launch.</p>
+                </div>
+              </div>
+              <div class="est-tier-row" id="est-support-tier">
+                <button class="est-tier active" data-support="none" data-supportcost="0">
+                  <span class="est-tier-name">None</span>
+                  <span class="est-tier-desc">Self-managed after launch</span>
+                  <span class="est-tier-price">₹0</span>
+                </button>
+                <button class="est-tier" data-support="basic" data-supportcost="2100">
+                  <span class="est-tier-name">3 Months</span>
+                  <span class="est-tier-desc">Bug fixes, minor changes</span>
+                  <span class="est-tier-price">+ ₹2,100</span>
+                </button>
+                <button class="est-tier" data-support="premium" data-supportcost="4200">
+                  <span class="est-tier-name">6 Months</span>
+                  <span class="est-tier-desc">Full support + CRO tweaks</span>
+                  <span class="est-tier-price">+ ₹4,200</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Right: Live Estimate Panel ── -->
+          <aside class="est-summary" id="est-summary">
+            <div class="est-summary-inner">
+              <div class="est-summary-header">
+                <span class="est-summary-badge">Live Estimate</span>
+                <h3>Your Project Cost</h3>
+              </div>
+
+              <div class="est-total-display">
+                <div class="est-total-range">
+                  <span class="est-total-label">Estimated Range</span>
+                  <span class="est-total-value" id="est-total-value">₹0 – ₹0</span>
+                </div>
+                <div class="est-total-bar">
+                  <div class="est-total-bar-fill" id="est-bar-fill"></div>
+                </div>
+              </div>
+
+              <div class="est-breakdown" id="est-breakdown">
+                <h4>Cost Breakdown</h4>
+                <div class="est-breakdown-row">
+                  <span>Base (Website Type)</span>
+                  <span id="bd-base">₹2,100</span>
+                </div>
+                <div class="est-breakdown-row">
+                  <span>Pages (<span id="bd-page-count">5</span> × ₹350)</span>
+                  <span id="bd-pages">₹1,750</span>
+                </div>
+                <div class="est-breakdown-row">
+                  <span>Design Multiplier</span>
+                  <span id="bd-design">1×</span>
+                </div>
+                <div class="est-breakdown-row">
+                  <span>Features & Add-ons</span>
+                  <span id="bd-features">₹5,600</span>
+                </div>
+                <div class="est-breakdown-row">
+                  <span>Rush Premium</span>
+                  <span id="bd-rush">None</span>
+                </div>
+                <div class="est-breakdown-row">
+                  <span>Post-Launch Support</span>
+                  <span id="bd-support">₹0</span>
+                </div>
+                <div class="est-breakdown-divider"></div>
+                <div class="est-breakdown-row est-breakdown-total">
+                  <span>Subtotal</span>
+                  <span id="bd-subtotal">₹0</span>
+                </div>
+              </div>
+
+              <div class="est-meta-info" id="est-meta-info">
+                <div class="est-meta-row">
+                  <span class="est-meta-icon">📄</span>
+                  <span id="meta-type">Static / Portfolio</span>
+                </div>
+                <div class="est-meta-row">
+                  <span class="est-meta-icon">📑</span>
+                  <span id="meta-pages">5 pages</span>
+                </div>
+                <div class="est-meta-row">
+                  <span class="est-meta-icon">🎨</span>
+                  <span id="meta-design">Standard design</span>
+                </div>
+                <div class="est-meta-row">
+                  <span class="est-meta-icon">⏱️</span>
+                  <span id="meta-timeline">Standard (4-6 weeks)</span>
+                </div>
+                <div class="est-meta-row">
+                  <span class="est-meta-icon">🛡️</span>
+                  <span id="meta-support">No support plan</span>
+                </div>
+              </div>
+
+              <p class="est-disclaimer">* This is an indicative estimate. Final pricing may vary based on detailed requirements discussion.</p>
+
+              <div class="est-cta-group">
+                <a href="contact.html" class="btn-primary" id="est-cta-contact">Get Exact Quote</a>
+                <a href="services.html" class="btn-ghost">Compare Packages</a>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Pricing FAQ</span>
+          <h2 class="section-title">Common pricing questions.</h2>
+        </div>
+        <div class="faq-list">
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              Is this estimate accurate?
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              <p>This estimator provides a realistic range based on typical project scopes. The final quote is determined after a detailed requirements discussion — but the estimate here is a great starting point.</p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              Can I negotiate on the price?
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Our pricing is already benchmarked to stay around 30% lower than typical agency rates. For larger scopes or long-term partnerships, we can still offer custom packaging.</p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              What payment methods do you accept?
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              <p>We accept UPI, bank transfer (NEFT/IMPS), credit/debit cards, and international wire transfers for overseas clients. Payments are split across milestones.</p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal">
+            <button class="faq-question" type="button" aria-expanded="false">
+              Are there hidden fees?
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              <p>No. What you see in the estimate covers all development work. Third-party costs (domain, hosting, premium plugins) are separate and disclosed upfront.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-banner reveal">
+          <div>
+            <h3>Ready to move forward with your project?</h3>
+            <p>Share your estimate with us and we'll schedule a free strategy call within 24 hours.</p>
+          </div>
+          <a href="contact.html" class="btn-primary">Start Your Project</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-box">
+        <p>&copy; <span data-current-year></span> Gelistra. Built for growth-focused brands.</p>
+        <div class="footer-stack">
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="estimator.html">Estimator</a>
+            <a href="contact.html">Contact</a>
+          </div>
+          <div class="footer-links footer-legal">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-and-conditions.html">Terms</a>
+            <a href="refund-cancellation-policy.html">Refund Policy</a>
+            <a href="cookie-policy.html">Cookie Policy</a>
+            <a href="disclaimer.html">Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
